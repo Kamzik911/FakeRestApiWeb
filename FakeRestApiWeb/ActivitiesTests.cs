@@ -18,5 +18,17 @@ namespace FakeRestApiWeb
         {
             methods.PostActivities();
         }
+
+        [TestMethod]
+        public void GetActivitiesId_ShouldPass()
+        {
+            methods.GetActivitiesId();
+        }
+
+        [TestMethod]
+        public void PutActivitesId_ShouldPass()
+        {
+            methods.PutActivitesId();
+        }
     }
 }

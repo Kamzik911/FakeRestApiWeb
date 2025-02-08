@@ -6,6 +6,8 @@ namespace FakeRestApiWeb
     public class Activities
     {
         public string id { get; set; } 
+        public DateTime dueDate { get; set; }
+        public bool completed { get; set; }
     }
 
     public class Methods
@@ -48,6 +50,53 @@ namespace FakeRestApiWeb
             Assert.IsNotNull(string.IsNullOrEmpty(jsonResponse["id"]?.ToString()));
             Assert.AreEqual(activitesObject.id, jsonResponse["id"]);
             Assert.IsTrue(activitesObject.completed);
+        }
+
+        public void GetActivitiesId()
+        {
+            var responseBody = new
+            {
+                id = 1,
+                title = "Activity 1",
+                completed = "false"
+            };
+
+            var request = new RestRequest($"{endpoints.mainEndpoint}{endpoints.activitiesEndpoint}/1", Method.Get);
+            var response = client.Execute(request);
+            var jsonResponse = JObject.Parse(response.Content);
+
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);            
+            Assert.AreEqual(responseBody.id, jsonResponse["id"]);
+            Assert.AreEqual(responseBody.title, jsonResponse["title"]);
+            //Assert.AreEqual(responseBody.completed, jsonResponse["false"]);
+            Console.WriteLine(response.Content);
+        }
+
+        public void PutActivitesId()
+        {
+            var requestBody = new
+            {
+                id = 0,
+                title = "Test",   
+                DueDate = DateTime.Now,
+                completed = true
+            };
+
+            var putRequest = new RestRequest($"{endpoints.mainEndpoint}{endpoints.activitiesEndpoint}/0", Method.Put).AddBody(requestBody);
+            var response = client.Execute(putRequest);
+            var data = JsonConvert.DeserializeObject<Activities>(response.Content);            
+
+            if (HttpStatusCode.OK != response.StatusCode)
+            {
+                throw new Exception("Http status code doesn't match");
+            }
+            else if (requestBody.completed != data?.completed)
+            {
+                throw new Exception("Http status code doesn't match");
+
+            }            
+            Console.WriteLine(response.Content);
+            
         }
     }
 }

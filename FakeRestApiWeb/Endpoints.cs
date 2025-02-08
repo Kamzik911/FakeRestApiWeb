@@ -6,6 +6,6 @@
         public string mainEndpoint = "https://fakerestapi.azurewebsites.net/";
 
         //Activities endpoint
-        public string activitiesEndpoint = "api/v1/Activities";
+        public string activitiesEndpoint = "api/v1/Activities";        
     }
 }
