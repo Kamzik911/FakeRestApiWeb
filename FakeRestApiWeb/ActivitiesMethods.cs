@@ -9,17 +9,9 @@ namespace FakeRestApiWeb
         public string title { get; set; }
         public DateTime dueDate { get; set; }
         public bool completed { get; set; }        
-    }
+    }    
 
-    public class Authors
-    {
-        public int id { get; set; }
-        public int idBook { get; set; }
-        public string firstName { get; set; }
-        public string lastName { get; set; }
-    }
-
-    public class Methods
+    public class ActivitiesMethods
     {
         RestClient client = new RestClient();
         Endpoints endpoints = new Endpoints();
@@ -112,59 +104,6 @@ namespace FakeRestApiWeb
             var response = client.Execute(deleteRequest);
 
             Assert.AreEqual (HttpStatusCode.OK, response.StatusCode);
-        }
-
-        public void GetAllAuthors()
-        {            
-            var getRequest = new RestRequest($"{endpoints.mainEndpoint}{endpoints.authorsEndpoint}", Method.Get);
-            var response = client.Execute(getRequest);            
-            var jsonResponse = JsonConvert.DeserializeObject<List<Authors>>(response.Content);
-            var firstAuthor = jsonResponse[0];
-                        
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);            
-            Assert.IsNotNull(firstAuthor.id);
-            Assert.IsNotNull(firstAuthor.idBook);
-            Assert.IsNotNull(firstAuthor.firstName);
-            Assert.IsNotNull(firstAuthor.lastName);            
-            Assert.AreEqual(1, firstAuthor.id);
-            
-        }
-
-        public void GetAuthorId()
-        {            
-            var getRequest = new RestRequest($"{endpoints.mainEndpoint}{endpoints.authorsEndpoint}/1", Method.Get);
-            var response = client.Execute(getRequest);            
-            var jsonResponse = JsonConvert.DeserializeObject<Authors>(response.Content);            
-
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-            Assert.IsNotNull(jsonResponse);
-            Assert.AreEqual(1, jsonResponse.id);
-            Assert.AreEqual(1, jsonResponse.idBook);
-            Assert.AreEqual(endpoints.firstName1, jsonResponse.firstName);
-            Assert.AreEqual(endpoints.lastName1, jsonResponse.lastName);
-            Console.WriteLine(response.Content);
-        }
-
-        public void CreateAuthor()
-        {
-            var objectBody = new
-            {
-                id = 0,
-                idBook = 0,
-                firstName = "Junk",
-                lastName = "Junkovi"
-            };
-            var getRequest = new RestRequest($"{endpoints.mainEndpoint}{endpoints.authorsEndpoint}", Method.Post).AddBody(objectBody);
-            var response = client.Execute(getRequest);
-            var jsonResponse = JsonConvert.DeserializeObject<Authors>(response.Content);
-
-            Assert.AreEqual (HttpStatusCode.OK, response.StatusCode);
-            Assert.IsNotNull(jsonResponse);
-            Assert.AreEqual(objectBody.id, jsonResponse.id);
-            Assert.AreEqual(objectBody.idBook, jsonResponse.idBook);
-            Assert.AreEqual(objectBody.firstName, jsonResponse.firstName);
-            Assert.AreEqual(objectBody.lastName, jsonResponse.lastName);
-            Console.WriteLine(response.Content);
-        }
+        }        
     }
 }

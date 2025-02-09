@@ -18,5 +18,9 @@
         //Authors id and strings
         public string firstName1 = "First Name 1";
         public string lastName1 = "Last Name 1";
+
+        //Books id
+        public string booksEndpoint = "api/v1/Authors/authors/books";
+        public int idBook1 = 1;
     }
 }

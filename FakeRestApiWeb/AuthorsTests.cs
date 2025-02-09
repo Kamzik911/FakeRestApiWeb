@@ -3,7 +3,7 @@
     [TestClass]
     public class AuthorsTests
     {
-        Methods methods = new Methods();
+        AuthorMethods methods = new AuthorMethods();
 
         [TestMethod]
         public void GetAllAuthors_ShouldPass()
@@ -21,6 +21,12 @@
         public void CreateAuthor_ShouldPass()
         {
             methods.CreateAuthor();
+        }
+
+        [TestMethod]
+        public void GetIdBook_ShouldPass()
+        {
+            methods.GetIdBook();
         }
     }
 }

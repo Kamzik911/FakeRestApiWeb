@@ -5,7 +5,7 @@ namespace FakeRestApiWeb
     [TestClass]
     public class ActivitiesTests
     {
-        Methods methods = new Methods();
+        ActivitiesMethods methods = new ActivitiesMethods();
 
         [TestMethod]
         public void GetActivities_ShouldPass()
