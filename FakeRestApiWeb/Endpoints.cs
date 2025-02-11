@@ -9,7 +9,7 @@
         public string activitiesEndpoint = "api/v1/Activities";
 
         //Authors endpoint
-        public string authorsEndpoint = "api/v1/Authors";
+        public string authorsEndpoint = "api/v1/Authors";        
 
         //Activity id
         public int zeroActivityId = 0;

@@ -79,7 +79,39 @@
             Assert.AreEqual(endpoints.lastName1, jsonResponse.lastName);
             Console.WriteLine(response.Content);
         }
+
+        public void PutAuthorId()
+        {
+            var authorObject = new
+            {
+                id = 1,
+                idBook = 1,
+                firstName = "Author",
+                lastName = "new"
+            };
+
+            var putRequest = new RestRequest($"{endpoints.mainEndpoint}{endpoints.authorsEndpoint}/1", Method.Put).AddBody(authorObject);
+            var response = client.Execute(putRequest);            
+            var jsonResponse = JsonConvert.DeserializeObject<Authors>(response.Content);
+
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            Assert.IsNotNull(jsonResponse);
+            Assert.AreEqual(1, jsonResponse.id);
+            Assert.AreEqual (1, jsonResponse.idBook);
+            Assert.AreEqual("Author", jsonResponse.firstName);
+            Assert.AreEqual("new", jsonResponse.lastName);
+            Console.WriteLine(response.Content);
+        }
+
+        public void DeleteAuthorId() 
+        {
+            var putRequest = new RestRequest($"{endpoints.mainEndpoint}{endpoints.authorsEndpoint}/1", Method.Delete);
+            var response = client.Execute(putRequest);
+            
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);            
+        }
     }
+
     public class Authors
     {
         public int id { get; set; }

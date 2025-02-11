@@ -28,5 +28,17 @@
         {
             methods.GetIdBook();
         }
+
+        [TestMethod]
+        public void PutAuthorId_ShouldPass()
+        {
+            methods.PutAuthorId();
+        }
+
+        [TestMethod]
+        public void DeleteAuthorId_ShouldPass()
+        {
+            methods.DeleteAuthorId();
+        }
     }
 }
