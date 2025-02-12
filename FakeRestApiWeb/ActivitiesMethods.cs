@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using RestSharp;
+using System.Runtime.InteropServices;
 using System.Text.Json;
 
 namespace FakeRestApiWeb
@@ -15,7 +16,7 @@ namespace FakeRestApiWeb
     {
         RestClient client = new RestClient();
         Endpoints endpoints = new Endpoints();
-
+        
         public void GetAllActivities()
         {
             var request = new RestRequest($"{endpoints.mainEndpoint}{endpoints.activitiesEndpoint}", Method.Get);

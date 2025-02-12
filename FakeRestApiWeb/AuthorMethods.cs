@@ -47,7 +47,7 @@
         {
             var getRequest = new RestRequest($"{endpoints.mainEndpoint}{endpoints.booksEndpoint}/{endpoints.idBook1}", Method.Get);
             var response = client.Execute(getRequest);
-            var jsonResponse = JsonConvert.DeserializeObject<List<Books>>(response.Content);
+            var jsonResponse = JsonConvert.DeserializeObject<List<AuthorBooks>>(response.Content);
             var jsonFirst = jsonResponse[0];
             var jsonSecond = jsonResponse[1];
 
@@ -119,7 +119,7 @@
         public string firstName { get; set; }
         public string lastName { get; set; }
     }
-    public class Books
+    public class AuthorBooks
     {
         public int id { get; set; }
         public int idBook { get; set; }

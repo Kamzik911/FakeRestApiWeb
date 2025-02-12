@@ -5,22 +5,19 @@
         //Main endpoint
         public string mainEndpoint = "https://fakerestapi.azurewebsites.net/";
 
-        //Activities endpoint
+        //Activities
         public string activitiesEndpoint = "api/v1/Activities";
-
-        //Authors endpoint
-        public string authorsEndpoint = "api/v1/Authors";        
-
-        //Activity id
         public int zeroActivityId = 0;
         public int firstActivityId = 1;
 
-        //Authors id and strings
+        //Authors
+        public string authorsEndpoint = "api/v1/Authors";
         public string firstName1 = "First Name 1";
         public string lastName1 = "Last Name 1";
-
-        //Books id
-        public string booksEndpoint = "api/v1/Authors/authors/books";
+               
+        //Books
+        public string authorBooksEndpoint = "api/v1/Authors/authors/books";
+        public string booksEndpoint = "api/v1/Books";
         public int idBook1 = 1;
     }
 }
