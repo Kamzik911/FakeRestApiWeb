@@ -10,5 +10,17 @@
         {
             coverPhotosMethod.GetAllCoverPhotos();
         }
+
+        [TestMethod]
+        public void CreateCoverPhoto_ShouldPass()
+        {
+            coverPhotosMethod.CreateCoverPhoto();
+        }
+
+        [TestMethod]
+        public void GetCoverPhotosBookId_ShouldPass()
+        {
+            coverPhotosMethod.GetCoverPhotosBookId();
+        }
     }
 }
