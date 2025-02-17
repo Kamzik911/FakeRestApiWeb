@@ -17,7 +17,9 @@
                
         //Books
         public string authorBooksEndpoint = "api/v1/Authors/authors/books";
-        public string booksEndpoint = "api/v1/Books";
-        public int idBook1 = 1;
+        public string booksEndpoint = "api/v1/Books";        
+
+        //CoverPhotos
+        public string coverPhotosEndpoint = "api/v1/CoverPhotos";
     }
 }

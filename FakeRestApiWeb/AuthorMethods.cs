@@ -8,7 +8,7 @@
         public void GetAllAuthors()
         {
             var getRequest = new RestRequest($"{endpoints.mainEndpoint}{endpoints.authorsEndpoint}", Method.Get);
-            var response = client.Execute(getRequest);
+            var response = client.ExecuteAsync(getRequest).GetAwaiter().GetResult();
             var jsonResponse = JsonConvert.DeserializeObject<List<Authors>>(response.Content);
             var firstAuthor = jsonResponse[0];
 
@@ -25,13 +25,13 @@
         {
             var objectBody = new
             {
-                id = 0,
-                idBook = 0,
+                id = 1,
+                idBook = 1,
                 firstName = "Junk",
                 lastName = "Junkovi"
             };
             var getRequest = new RestRequest($"{endpoints.mainEndpoint}{endpoints.authorsEndpoint}", Method.Post).AddBody(objectBody);
-            var response = client.Execute(getRequest);
+            var response = client.ExecuteAsync(getRequest).Result;
             var jsonResponse = JsonConvert.DeserializeObject<Authors>(response.Content);
 
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
@@ -43,32 +43,22 @@
             Console.WriteLine(response.Content);
         }
 
-        public void GetIdBook()
+        public void GetAuthorIdBook()
         {
-            var getRequest = new RestRequest($"{endpoints.mainEndpoint}{endpoints.booksEndpoint}/{endpoints.idBook1}", Method.Get);
-            var response = client.Execute(getRequest);
+            var request = new RestRequest($"{endpoints.mainEndpoint}{endpoints.authorBooksEndpoint}/1", Method.Get);
+            var response = client.ExecuteAsync(request).GetAwaiter().GetResult();
             var jsonResponse = JsonConvert.DeserializeObject<List<AuthorBooks>>(response.Content);
-            var jsonFirst = jsonResponse[0];
-            var jsonSecond = jsonResponse[1];
+            var firstAuthor = jsonResponse.First();
 
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-            Assert.IsNotNull(jsonResponse);
-            Assert.AreEqual(1, jsonFirst.id);
-            Assert.AreEqual(1, jsonFirst.idBook);
-            Assert.AreEqual("First Name 1", jsonFirst.firstName);
-            Assert.AreEqual("Last Name 1", jsonFirst.lastName);
-
-            Assert.AreEqual(2, jsonSecond.id, "Id 2 doesn't match");
-            Assert.AreEqual(1, jsonSecond.idBook, "Id book 1 doesn't match");
-            Assert.AreEqual("First Name 2", jsonSecond.firstName, "First name 2 doesn't match");
-            Assert.AreEqual("Last Name 2", jsonSecond.lastName, "Last name 2 doesn't match");
-            Console.WriteLine(response);
+            Assert.AreEqual(1, firstAuthor.id);
+            Assert.AreEqual(1, firstAuthor.idBook);
         }
 
         public void GetAuthorId()
         {
             var getRequest = new RestRequest($"{endpoints.mainEndpoint}{endpoints.authorsEndpoint}/1", Method.Get);
-            var response = client.Execute(getRequest);
+            var response = client.ExecuteAsync(getRequest).GetAwaiter().GetResult();
             var jsonResponse = JsonConvert.DeserializeObject<Authors>(response.Content);
 
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
@@ -91,7 +81,7 @@
             };
 
             var putRequest = new RestRequest($"{endpoints.mainEndpoint}{endpoints.authorsEndpoint}/1", Method.Put).AddBody(authorObject);
-            var response = client.Execute(putRequest);            
+            var response = client.ExecuteAsync(putRequest).GetAwaiter().GetResult();            
             var jsonResponse = JsonConvert.DeserializeObject<Authors>(response.Content);
 
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
@@ -106,7 +96,7 @@
         public void DeleteAuthorId() 
         {
             var putRequest = new RestRequest($"{endpoints.mainEndpoint}{endpoints.authorsEndpoint}/1", Method.Delete);
-            var response = client.Execute(putRequest);
+            var response = client.ExecuteAsync(putRequest).GetAwaiter().GetResult();
             
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);            
         }

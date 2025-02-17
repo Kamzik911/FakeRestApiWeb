@@ -24,9 +24,9 @@
         }
 
         [TestMethod]
-        public void GetIdBook_ShouldPass()
+        public void GetAuthorIdBook_ShouldPass()
         {
-            methods.GetIdBook();
+            methods.GetAuthorIdBook();
         }
 
         [TestMethod]

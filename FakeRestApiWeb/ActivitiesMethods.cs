@@ -20,7 +20,7 @@ namespace FakeRestApiWeb
         public void GetAllActivities()
         {
             var request = new RestRequest($"{endpoints.mainEndpoint}{endpoints.activitiesEndpoint}", Method.Get);
-            var response = client.Execute(request);
+            var response = client.ExecuteAsync(request).GetAwaiter().GetResult();
             var jsonResponse = JArray.Parse(response.Content);
 
             if (response.StatusCode != HttpStatusCode.OK)
@@ -46,7 +46,7 @@ namespace FakeRestApiWeb
             };
 
             var request = new RestRequest($"{endpoints.mainEndpoint}{endpoints.activitiesEndpoint}", Method.Post).AddBody(responseBody);
-            var response = client.Execute(request);
+            var response = client.ExecuteAsync(request).GetAwaiter().GetResult();
             var jsonResponse = JObject.Parse(response.Content);
             Assert.AreEqual(responseBody.id, jsonResponse["id"]);
             Assert.IsTrue(responseBody.completed);
@@ -64,7 +64,7 @@ namespace FakeRestApiWeb
             };
 
             var request = new RestRequest($"{endpoints.mainEndpoint}{endpoints.activitiesEndpoint}/{endpoints.firstActivityId}", Method.Get);
-            var response = client.Execute(request);            
+            var response = client.ExecuteAsync(request).GetAwaiter().GetResult();            
             var jsonResponse = JsonConvert.DeserializeObject<Activities>(response.Content);
 
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);                        
@@ -85,7 +85,7 @@ namespace FakeRestApiWeb
             };
 
             var putRequest = new RestRequest($"{endpoints.mainEndpoint}{endpoints.activitiesEndpoint}/{endpoints.zeroActivityId}", Method.Put).AddBody(requestBody);
-            var response = client.Execute(putRequest);
+            var response = client.ExecuteAsync(putRequest).GetAwaiter().GetResult();
             var data = JsonConvert.DeserializeObject<Activities>(response.Content);            
 
             if (HttpStatusCode.OK != response.StatusCode)
