@@ -1,8 +1,4 @@
-﻿using Microsoft.Extensions.DependencyModel;
-using Newtonsoft.Json.Schema;
-using System.Diagnostics.CodeAnalysis;
-
-namespace FakeRestApiWeb
+﻿namespace FakeRestApiWeb
 {
     static class CoverPhotos
     {
@@ -64,6 +60,33 @@ namespace FakeRestApiWeb
             Assert.AreEqual(1, jsonResponse["idBook"]);            
             Console.WriteLine(jsonResponse);
         }        
+
+        public void GetCoverPhodosId()
+        {
+            int bookNotFound = 0;
+            int firstBook = 1;
+
+            {
+                var request = new RestRequest($"{endpoints.mainEndpoint}{endpoints.coverPhotosEndpoint}/{bookNotFound}", Method.Get);
+                var response = client.ExecuteAsync(request).GetAwaiter().GetResult();
+                var jsonResponse = JsonConvert.DeserializeObject<CoverPhotosBooks>(response.Content);
+
+
+                Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);                
+                Console.WriteLine(jsonResponse); 
+            }
+            {                
+                var request = new RestRequest($"{endpoints.mainEndpoint}{endpoints.coverPhotosEndpoint}/{firstBook}", Method.Get);
+                var response = client.ExecuteAsync(request).GetAwaiter().GetResult();
+                var jsonResponse = JsonConvert.DeserializeObject<CoverPhotosBooks>(response.Content);
+
+                Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+                Assert.AreEqual(1, jsonResponse.id);
+                Assert.AreEqual(1, jsonResponse.idBook);
+                Assert.IsTrue(jsonResponse.url.Contains("https://"), "Url in json body doesn't contains \"http\"");                
+            }
+        }
+
     }
 
     public class CoverPhotosBooks
