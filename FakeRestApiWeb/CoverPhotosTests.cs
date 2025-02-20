@@ -21,8 +21,8 @@
         public void GetCoverPhotosBookId_ShouldPass()
         {
             coverPhotosMethod.GetCoverPhotosBookId();
-        }
-
+        }       
+        
         [TestMethod]
         public void GetCoverPhodosId_ShouldPass()
         {

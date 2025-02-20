@@ -66,8 +66,7 @@
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);                        
             Assert.AreEqual(responseBody.id, jsonResponse?.id);
             Assert.AreEqual(responseBody.title, jsonResponse?.title);            
-            Assert.AreEqual(responseBody.completed, jsonResponse?.completed);
-            //Console.WriteLine(response.Content);
+            Assert.AreEqual(responseBody.completed, jsonResponse?.completed);            
         }
 
         public void PutActivitesId()

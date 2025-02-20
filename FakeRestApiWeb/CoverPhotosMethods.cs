@@ -94,11 +94,14 @@ namespace FakeRestApiWeb
             {
                 var request = new RestRequest($"{endpoints.mainEndpoint}{endpoints.coverPhotosEndpoint}/{bookNotFound}", Method.Get);
                 var response = client.ExecuteAsync(request).GetAwaiter().GetResult();
-                var jsonResponse = JsonConvert.DeserializeObject<CoverPhotosBooks>(response.Content);
+                var jsonResponse = JObject.Parse(response.Content);
 
 
-                Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);                
-                Console.WriteLine(jsonResponse); 
+                Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+                Assert.IsTrue(jsonResponse["type"].ToString().Contains("https"));
+                Assert.IsTrue(jsonResponse["title"].ToString().Contains("Not Found"));
+                Assert.IsTrue(jsonResponse["status"].ToString().Equals("404"), "Statuc number doesn't match");
+                Assert.IsTrue(jsonResponse["traceId"].ToString().Contains("00-"));                
             }
             {                
                 var request = new RestRequest($"{endpoints.mainEndpoint}{endpoints.coverPhotosEndpoint}/{firstBook}", Method.Get);
@@ -106,8 +109,8 @@ namespace FakeRestApiWeb
                 var jsonResponse = JsonConvert.DeserializeObject<CoverPhotosBooks>(response.Content);
 
                 Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-                Assert.AreEqual(1, jsonResponse.id);
-                Assert.AreEqual(1, jsonResponse.idBook);
+                Assert.AreEqual(firstBook, jsonResponse.id);
+                Assert.AreEqual(firstBook, jsonResponse.idBook);
                 Assert.IsTrue(jsonResponse.url.Contains("https://"), "Url in json body doesn't contains \"http\"");                
             }
         }
