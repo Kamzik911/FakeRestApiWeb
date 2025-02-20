@@ -1,22 +1,24 @@
-﻿using RestSharp;
+﻿using System.Data;
 
 namespace FakeRestApiWeb
 {
     [TestClass]
     public class ActivitiesTests
     {
-        ActivitiesMethods methods = new ActivitiesMethods();
+        ActivitiesMethods methods = new ActivitiesMethods();        
 
         [TestMethod]
         public void GetActivities_ShouldPass()
         {
             methods.GetAllActivities();
-        }
+        }       
 
-        [TestMethod]
-        public void ACreateActivity_ShouldPass()
+        [DataTestMethod]
+        [DataRow(true)]
+        [DataRow(false)]
+        public void ACreateActivity_ShouldPass(bool cTrueFalse)
         {
-            methods.CreateActivity();
+            methods.CreateActivity(cTrueFalse);
         }
 
         [TestMethod]

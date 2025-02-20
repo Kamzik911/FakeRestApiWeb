@@ -1,13 +1,9 @@
-﻿using RestSharp;
-using System.Runtime.InteropServices;
-using System.Text.Json;
-
-namespace FakeRestApiWeb
-{
+﻿namespace FakeRestApiWeb
+{    
     public class Activities
     {
         public int id { get; set; } 
-        public string title { get; set; }
+        public string ?title { get; set; }
         public DateTime dueDate { get; set; }
         public bool completed { get; set; }        
     }    
@@ -34,12 +30,12 @@ namespace FakeRestApiWeb
             Assert.IsNotNull(jsonResponse.First);
             Console.WriteLine(response.Content);
         }
-
-        public void CreateActivity()
+        
+        public void CreateActivity(bool cTrueFalse)
         {
             var responseBody = new
             {
-                id = endpoints.zeroActivityId,
+                id = 0,
                 title = "Activity 356",
                 DueDate = DateTime.Now,
                 completed = true
@@ -49,7 +45,7 @@ namespace FakeRestApiWeb
             var response = client.ExecuteAsync(request).GetAwaiter().GetResult();
             var jsonResponse = JObject.Parse(response.Content);
             Assert.AreEqual(responseBody.id, jsonResponse["id"]);
-            Assert.IsTrue(responseBody.completed);
+            Assert.AreEqual(cTrueFalse, jsonResponse["completed"]);
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
             Console.WriteLine(response.Content);
         }

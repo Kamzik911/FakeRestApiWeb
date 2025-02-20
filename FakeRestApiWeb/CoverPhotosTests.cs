@@ -4,7 +4,7 @@
     public class CoverPhotosTests
     {
         CoverPhotosMethods coverPhotosMethod = new CoverPhotosMethods();
-
+                
         [TestMethod]
         public void GetAllCoverPhotos_ShouldPass()
         {
@@ -12,7 +12,7 @@
         }
 
         [TestMethod]
-        public void CreateCoverPhoto_ShouldPass()
+        public void ACreateCoverPhoto_ShouldPass()
         {
             coverPhotosMethod.CreateCoverPhoto();
         }
@@ -26,7 +26,19 @@
         [TestMethod]
         public void GetCoverPhodosId_ShouldPass()
         {
-            coverPhotosMethod.GetCoverPhodosId();
+            coverPhotosMethod.GetCoverPhotosId();
+        }
+
+        [TestMethod]
+        public void BPutCoverPhotosId_ShouldPass()
+        {
+            coverPhotosMethod.PutCoverPhotosId();
+        }
+
+        [TestMethod]
+        public void CDeleteCroverPhotosId_ShouldPass()
+        {
+            coverPhotosMethod.DeleteCoverPhotosId();
         }
     }
 }
