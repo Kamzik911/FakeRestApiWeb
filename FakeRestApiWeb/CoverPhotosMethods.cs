@@ -4,7 +4,10 @@ using System.Threading.Tasks;
 namespace FakeRestApiWeb
 {
     public class CoverPhotosMethods
-    {        
+    {
+        int bookNotFound = 0;
+        int firstBook = 1;
+
         public int bookId { get; set; }
 
         RestClient client = new RestClient();
@@ -87,10 +90,7 @@ namespace FakeRestApiWeb
         }        
 
         public void GetCoverPhotosId()
-        {
-            int bookNotFound = 0;
-            int firstBook = 1;
-                        
+        {                                    
             {
                 var request = new RestRequest($"{endpoints.mainEndpoint}{endpoints.coverPhotosEndpoint}/{bookNotFound}", Method.Get);
                 var response = client.ExecuteAsync(request).GetAwaiter().GetResult();
@@ -113,7 +113,7 @@ namespace FakeRestApiWeb
                 Assert.AreEqual(firstBook, jsonResponse.idBook);
                 Assert.IsTrue(jsonResponse.url.Contains("https://"), "Url in json body doesn't contains \"http\"");                
             }
-        }
+        }        
     }
 
     public class CoverPhotosBooks

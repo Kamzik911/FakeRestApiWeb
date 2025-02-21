@@ -22,5 +22,8 @@
         //CoverPhotos
         public string coverPhotosEndpoint = "api/v1/CoverPhotos";
         public string coverPhotosBookId = "api/v1/CoverPhotos/books/covers";
+
+        //Users
+        public string usersMainEndpoint = "api/v1/Users";
     }
 }
