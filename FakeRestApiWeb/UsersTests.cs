@@ -24,5 +24,19 @@
         {
             usersMethods.GetUserId(userId, userName);
         }
+
+        [TestMethod]
+        public void EditUserId_ShouldPass()
+        {
+            usersMethods.EditUserId();
+        }
+
+        [DataTestMethod]
+        [DataRow(1)]
+        [DataRow(2)]
+        public void DeleteUserId_ShouldPass(int userId)
+        {
+            usersMethods.DeleteUserId(userId);
+        }
     }
 }

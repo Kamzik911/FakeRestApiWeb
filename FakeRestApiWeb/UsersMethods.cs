@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyModel;
+using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
 
 namespace FakeRestApiWeb
 {
@@ -6,6 +7,8 @@ namespace FakeRestApiWeb
     {
         RestClient client = new RestClient();
         Endpoints endpoints = new Endpoints();
+
+        public int UserId { get; set; }
 
         public void GetAllUsers()
         {
@@ -33,7 +36,7 @@ namespace FakeRestApiWeb
             };
             var request = new RestRequest($"{endpoints.mainEndpoint}{endpoints.usersMainEndpoint}", Method.Post).AddBody(objectBody);
             var response = client.ExecuteAsync(request).Result;
-            var jsonResponse = JObject.Parse(response.Content);
+            var jsonResponse = JObject.Parse(response.Content);            
 
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
             Assert.AreEqual(objectBody.id, jsonResponse["id"]);
@@ -55,6 +58,33 @@ namespace FakeRestApiWeb
             Assert.AreEqual(userId, jsonResponse["id"]);
             Assert.AreEqual(userName, jsonResponse["userName"]);
             Console.WriteLine(jsonResponse);
+        }
+
+        public void EditUserId()
+        {
+            var objectBody = new
+            {    
+                id = 1,
+                userName = "Vendulina",
+                password = "passeka"
+            };
+            var request = new RestRequest($"{endpoints.mainEndpoint}{endpoints.usersMainEndpoint}/1", Method.Put).AddBody(objectBody);
+            var response = client.ExecuteAsync(request).Result;
+            var jsonResponse = JObject.Parse(response.Content);
+
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            Assert.AreEqual(1, jsonResponse["id"], "User id doesn't match");
+            Assert.AreEqual(objectBody.userName, jsonResponse["userName"]);
+            Assert.AreEqual(objectBody.password, jsonResponse["password"]);
+            Console.WriteLine(jsonResponse);
+        }
+
+        public void DeleteUserId(int userId)
+        {            
+            var request = new RestRequest($"{endpoints.mainEndpoint}{endpoints.usersMainEndpoint}/{userId}", Method.Delete);
+            var response = client.ExecuteAsync(request).Result;            
+
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);            
         }
     }
 }
